@@ -1,37 +1,29 @@
 -- @author eScape <https://github.com/escapepz/ZUL>
 
 -- zul_test_server.lua
--- Server-side test script for ZUL framework
+-- Scenario: Untracked (Not in Include list)
+-- Expected: Should stay at INFO (default) even if Global is DEBUG
 
 local ZUL = require "ZUL"
+local logger = ZUL.new("ZUL_Server")
 
 local function runServerTests()
 	if not isServer() then return end
 
-	local logger = ZUL.new("ZUL_Server")
-	logger:info("=== Running Server ZUL Test Suite ===")
+	logger:info("--- Running Server ZUL Tests (Config: Untracked) ---")
 
-	-- Test 1: Levels
-	logger:trace("Server TRACE")
-	logger:debug("Server DEBUG")
-	logger:info("Server INFO")
-	logger:warn("Server WARN")
-	logger:error("Server ERROR")
-	logger:fatal("Server FATAL")
+	-- Should be SILENT if there's an IncludeMods list and we aren't in it
+	logger:trace("Server TRACE - Should be SILENT")
+	logger:debug("Server DEBUG - Should be SILENT")
 
-	-- Test 2: Database/System Context
-	logger:info("System Event", { event = "server_restart", uptime = 3600 })
+	logger:info("Server INFO - Should be VISIBLE")
 
-	-- Test 3: Sandbox Verification (Server side)
-	ZUL.loadSandboxOptions()
-	---@diagnostic disable-next-line: unnecessary-if
-	if ZUL.sandboxOptions.loaded then
-		logger:info("Sandbox options loaded on server", {
-			globalLogLevel = ZUL.sandboxOptions.globalLogLevel
-		})
-	end
-
-	logger:info("=== Server ZUL Tests Complete ===")
+	-- Verify ZUL state for this mod
+	logger:info("Mod Status", {
+		modName = "ZUL_Server",
+		effectiveLevel = logger:getEffectiveLevel(),
+		isIncluded = ZUL.shouldApplySandboxSettings("ZUL_Server")
+	})
 end
 
 Events.OnServerStarted.Add(runServerTests)

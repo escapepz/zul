@@ -299,6 +299,7 @@ end
 --- @param modName string
 --- @return table
 function ZUL.new(modName)
+	---@diagnostic disable-next-line: unnecessary-if
 	-- Proactive attempt to bind settings if this is the first logger created
 	if not ZUL.sandboxOptions.loaded then
 		ZUL.loadSandboxOptions()

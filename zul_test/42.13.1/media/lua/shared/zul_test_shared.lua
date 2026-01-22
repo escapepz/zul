@@ -1,20 +1,28 @@
 -- @author eScape <https://github.com/escapepz/ZUL>
 
 -- zul_test_shared.lua
--- Shared test script to verify ZUL functionality on both sides
+-- Scenario: Excluded from Global Log Level
+-- Expected: Only INFO and above should appear, even if Global is DEBUG/TRACE
 
 local ZUL = require "ZUL"
+local logger = ZUL.new("ZUL_Shared")
 
 local function runSharedTests()
-	local logger = ZUL.new("ZUL_Shared")
-	logger:info("--- Running Shared ZUL Tests ---")
+	logger:info("--- Running Shared ZUL Tests (Config: Excluded) ---")
 
-	-- Test: Basic logging on both sides
-	logger:info("Shared logger test message")
-	logger:debug("Shared debug message (if level >= DEBUG)")
+	-- These should be SILENT if Global Level is DEBUG but we are Excluded
+	logger:trace("Shared TRACE - Should be SILENT")
+	logger:debug("Shared DEBUG - Should be SILENT")
 
-	-- Test: Context logging
-	logger:info("Shared action", { side = isServer() and "Server" or "Client", status = "online" })
+	logger:info("Shared INFO - Should be VISIBLE")
+	logger:warn("Shared WARN - Should be VISIBLE")
+
+	-- Verify ZUL state for this mod
+	logger:info("Mod Status", {
+		modName = "ZUL_Shared",
+		effectiveLevel = logger:getEffectiveLevel(),
+		isIncluded = ZUL.shouldApplySandboxSettings("ZUL_Shared")
+	})
 end
 
 Events.OnInitGlobalModData.Add(runSharedTests)

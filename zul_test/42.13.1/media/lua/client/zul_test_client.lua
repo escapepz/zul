@@ -1,38 +1,30 @@
 -- @author eScape <https://github.com/escapepz/ZUL>
 
 -- zul_test_client.lua
--- Client-side test script for ZUL framework
+-- Scenario: Included in Global Log Level
+-- Expected: Should adopt Global Level (e.g., DEBUG/TRACE messages appear)
 
 local ZUL = require "ZUL"
+local logger = ZUL.new("ZUL_Client")
 
 local function runClientTests()
 	if not isClient() and not isMultiplayer() then return end
 
-	local logger = ZUL.new("ZUL_Client")
-	logger:info("=== Running Client ZUL Test Suite ===")
+	logger:info("--- Running Client ZUL Tests (Config: Included) ---")
 
-	-- Test 1: Levels
-	logger:trace("Client TRACE")
-	logger:debug("Client DEBUG")
-	logger:info("Client INFO")
-	logger:warn("Client WARN")
-	logger:error("Client ERROR")
-	logger:fatal("Client FATAL")
+	-- These should be VISIBLE if Global Level is set to DEBUG
+	logger:trace("Client TRACE - Visible if Global is TRACE")
+	logger:debug("Client DEBUG - Visible if Global is DEBUG")
 
-	-- Test 2: Context
-	logger:info("Player Interaction", { action = "openWindow", room = "bedroom" })
+	logger:info("Client INFO - Always Visible")
 
-	-- Test 3: Sandbox Check (Client side)
-	ZUL.loadSandboxOptions()
-	---@diagnostic disable-next-line: unnecessary-if
-	if ZUL.sandboxOptions.loaded then
-		logger:info("Sandbox options detected on client", {
-			globalLogLevel = ZUL.sandboxOptions.globalLogLevel,
-			includeCount = #ZUL.sandboxOptions.includeMods
-		})
-	end
-
-	logger:info("=== Client ZUL Tests Complete ===")
+	-- Verify ZUL state for this mod
+	logger:info("Mod Status", {
+		modName = "ZUL_Client",
+		effectiveLevel = logger:getEffectiveLevel(),
+		isIncluded = ZUL.shouldApplySandboxSettings("ZUL_Client"),
+		globalLevel = ZUL.sandboxOptions.globalLogLevel
+	})
 end
 
 Events.OnGameStart.Add(runClientTests)
