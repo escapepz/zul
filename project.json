@@ -1,0 +1,20 @@
+{
+    "$schema": "https://gist.githubusercontent.com/hashtafak/1ec0f9800f4e86c74ac3f102946c88ae/raw/8b23a803ae60f9b7673945d44a81fe7ae7c55f8c/pzstudio.schema.json",
+    "title": "ZUL - Zomboid Unified Logging",
+    "authors": [
+        "eScape"
+    ],
+    "workshop": {
+        "visibility": "unlisted",
+        "tags": [
+            "Build 42"
+        ],
+        "excludes": []
+    },
+    "mods": {
+        "zul": {
+            "name": "ZUL - Zomboid Unified Logging",
+            "description": "A unified logging framework for Project Zomboid mods with multi-level logging support, child loggers, and configurable sandbox options."
+        }
+    }
+}

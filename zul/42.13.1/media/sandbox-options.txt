@@ -1,0 +1,26 @@
+VERSION = 1,
+
+option ZUL.GlobalLogLevel
+{
+	type = enum,
+	numValues = 6,
+	default = 3,
+	page = ZUL,
+	translation = ZUL_GlobalLogLevel,
+}
+
+option ZUL.IncludeMods
+{
+	type = string,
+	default = ,
+	page = ZUL,
+	translation = ZUL_IncludeMods,
+}
+
+option ZUL.ExcludeMods
+{
+	type = string,
+	default = ,
+	page = ZUL,
+	translation = ZUL_ExcludeMods,
+}

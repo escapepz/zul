@@ -1,0 +1,34 @@
+[h1]ZUL - Zomboid Unified Logging[/h1]
+
+A unified logging framework for Project Zomboid mods with multi-level logging support, child loggers, and configurable sandbox options.
+
+[h2]Features[/h2]
+[list]
+[*] [b]Multi-Level Logging[/b]: TRACE, DEBUG, INFO, WARN, ERROR, FATAL
+[*] [b]Child Loggers[/b]: Create mod-specific logger instances
+[*] [b]Sandbox Options[/b]: Configure global log levels and mod filtering
+[*] [b]Server/Client Identification[/b]: Automatic side detection in logs
+[*] [b]Structured Logging[/b]: Support for context and details
+[*] [b]Include/Exclude Lists[/b]: Control which mods use ZUL settings
+[/list]
+
+[h2]Usage Example[/h2]
+[code]
+local ZUL = require "ZUL"
+local logger = ZUL.new("MyMod")
+
+logger:info("Player entered RV")
+logger:debug("Processing data", { playerId = 123 })
+logger:error("Failed to load config", errorDetails)
+[/code]
+
+[h2]Sandbox Options[/h2]
+[list]
+[*] [b]Global Log Level[/b]: Set default log level for all mods using ZUL
+[*] [b]Include Mods[/b]: Comma-separated list of mods to apply settings to
+[*] [b]Exclude Mods[/b]: Comma-separated list of mods to ignore
+[/list]
+
+[h2]Support[/h2]
+[url=https://ko-fi.com/escapepz]Support on Ko-fi[/url]
+[url=https://github.com/escapepz]GitHub[/url]
