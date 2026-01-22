@@ -4,6 +4,7 @@
         "build": "pzstudio clean && pzstudio build",
         "watch": "pzstudio clean && pzstudio build && pzstudio watch",
         "update": "pzstudio update",
-        "setup:nonsteam": "mklink /J \"C:\\ZomboidClient1\\mods\\zul\" \"%CD%\\zul\""
+        "setup:nonsteam": "mklink /J \"C:\\ZomboidClient1\\mods\\zul\" \"%CD%\\zul\"",
+        "setup:nonsteam:test": "mklink /J \"C:\\ZomboidClient1\\mods\\zul_test\" \"%CD%\\zul_test\""
     }
 }

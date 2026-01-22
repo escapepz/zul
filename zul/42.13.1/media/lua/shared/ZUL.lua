@@ -1,5 +1,4 @@
--- @author eScape <https://ko-fi.com/escapepz>
-
+-- @author eScape <https://github.com/escapepz/ZUL>
 
 -- ZUL.lua (Zomboid Unified Logging)
 -- A unified logging framework for Project Zomboid mods
@@ -61,20 +60,23 @@ end
 
 --- Load sandbox options and apply settings
 function ZUL.loadSandboxOptions()
+	---@diagnostic disable-next-line: unnecessary-if
 	if ZUL.sandboxOptions.loaded then return end
-	
+
 	local sandboxVars = SandboxVars
+	---@diagnostic disable-next-line: undefined-field
 	if not sandboxVars or not sandboxVars.ZUL then
 		-- Sandbox options not available yet, use defaults
 		return
 	end
-	
+
 	-- Verify we actually have values (sometimes SandboxVars exist but are empty during early boot)
+	---@diagnostic disable-next-line: undefined-field
 	local globalLevel = sandboxVars.ZUL.GlobalLogLevel
 	if globalLevel == nil then
 		return
 	end
-	
+
 	-- Load global log level
 	-- Convert sandbox option index to log level
 	-- 1=TRACE, 2=DEBUG, 3=INFO, 4=WARN, 5=ERROR, 6=FATAL
@@ -87,9 +89,9 @@ function ZUL.loadSandboxOptions()
 		[6] = ZUL.Level.FATAL
 	}
 	ZUL.sandboxOptions.globalLogLevel = levelMap[globalLevel] or ZUL.Level.INFO
-	ZUL.defaultLevel = ZUL.sandboxOptions.globalLogLevel
-	
+
 	-- Parse include mods list
+	---@diagnostic disable-next-line: undefined-field
 	local includeMods = sandboxVars.ZUL.IncludeMods or ""
 	if includeMods and includeMods ~= "" then
 		for modName in string.gmatch(includeMods, "([^,]+)") do
@@ -99,8 +101,9 @@ function ZUL.loadSandboxOptions()
 			end
 		end
 	end
-	
+
 	-- Parse exclude mods list
+	---@diagnostic disable-next-line: undefined-field
 	local excludeMods = sandboxVars.ZUL.ExcludeMods or ""
 	if excludeMods and excludeMods ~= "" then
 		for modName in string.gmatch(excludeMods, "([^,]+)") do
@@ -110,7 +113,7 @@ function ZUL.loadSandboxOptions()
 			end
 		end
 	end
-	
+
 	ZUL.sandboxOptions.loaded = true
 end
 
@@ -120,23 +123,23 @@ end
 function ZUL.shouldApplySandboxSettings(modName)
 	-- Always exclude ZUL itself from sandbox settings
 	if modName == "ZUL" then return false end
-	
+
 	-- If mod is in exclude list, don't apply settings
 	if ZUL.sandboxOptions.excludeMods[modName] then
 		return false
 	end
-	
+
 	-- If include list is empty, apply to all (except excluded)
 	local hasIncludeList = false
 	for _ in pairs(ZUL.sandboxOptions.includeMods) do
 		hasIncludeList = true
 		break
 	end
-	
+
 	if not hasIncludeList then
 		return true
 	end
-	
+
 	-- If include list exists, only apply to mods in the list
 	return ZUL.sandboxOptions.includeMods[modName] == true
 end
@@ -156,17 +159,19 @@ function ZUL.getEffectiveLevel(modName)
 	if ZUL.modLevels[modName] then
 		return ZUL.modLevels[modName]
 	end
-	
+
+	---@diagnostic disable-next-line: unnecessary-if
 	-- Try to load sandbox options if not loaded yet
 	if not ZUL.sandboxOptions.loaded then
 		ZUL.loadSandboxOptions()
 	end
-	
+
+	---@diagnostic disable-next-line: unnecessary-if
 	-- Apply sandbox settings if applicable
 	if ZUL.shouldApplySandboxSettings(modName) and ZUL.sandboxOptions.globalLogLevel then
 		return ZUL.sandboxOptions.globalLogLevel
 	end
-	
+
 	return ZUL.defaultLevel
 end
 
@@ -259,27 +264,27 @@ end
 -- Level-specific Shorthands
 
 function ZUL.trace(modName, message, context, details)
-	_log(ZUL.Level.TRACE, modName, message, context, details)
+	_log(ZUL.Level.TRACE, modName, message, context, details, false)
 end
 
 function ZUL.debug(modName, message, context, details)
-	_log(ZUL.Level.DEBUG, modName, message, context, details)
+	_log(ZUL.Level.DEBUG, modName, message, context, details, false)
 end
 
 function ZUL.info(modName, message, context, details)
-	_log(ZUL.Level.INFO, modName, message, context, details)
+	_log(ZUL.Level.INFO, modName, message, context, details, false)
 end
 
 function ZUL.warn(modName, message, context, details)
-	_log(ZUL.Level.WARN, modName, message, context, details)
+	_log(ZUL.Level.WARN, modName, message, context, details, false)
 end
 
 function ZUL.error(modName, message, context, details)
-	_log(ZUL.Level.ERROR, modName, message, context, details)
+	_log(ZUL.Level.ERROR, modName, message, context, details, false)
 end
 
 function ZUL.fatal(modName, message, context, details)
-	_log(ZUL.Level.FATAL, modName, message, context, details)
+	_log(ZUL.Level.FATAL, modName, message, context, details, false)
 end
 
 --- Backward compatibility and default logging method
@@ -294,6 +299,11 @@ end
 --- @param modName string
 --- @return table
 function ZUL.new(modName)
+	-- Proactive attempt to bind settings if this is the first logger created
+	if not ZUL.sandboxOptions.loaded then
+		ZUL.loadSandboxOptions()
+	end
+
 	local child = {}
 
 	function child:trace(msg, ctx, det) ZUL.trace(modName, msg, ctx, det) end
@@ -316,5 +326,8 @@ function ZUL.new(modName)
 
 	return child
 end
+
+-- Attempt early load (usually fails during script load, but harmless)
+ZUL.loadSandboxOptions()
 
 return ZUL

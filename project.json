@@ -9,12 +9,18 @@
         "tags": [
             "Build 42"
         ],
-        "excludes": []
+        "excludes": [
+            "zul_test"
+        ]
     },
     "mods": {
         "zul": {
             "name": "ZUL - Zomboid Unified Logging",
             "description": "A unified logging framework for Project Zomboid mods with multi-level logging support, child loggers, and configurable sandbox options."
+        },
+        "zul_test": {
+            "name": "zul_test",
+            "description": ""
         }
     }
 }

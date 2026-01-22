@@ -1,5 +1,4 @@
--- @author eScape <https://ko-fi.com/escapepz>
-
+-- @author eScape <https://github.com/escapepz/ZUL>
 
 -- ZUL_Init.lua
 -- Initialization script for ZUL framework
@@ -8,41 +7,35 @@
 local ZUL = require "ZUL"
 
 local function initializeZUL()
-	-- Only log if it's the first successful load or a significant status change
-	local wasLoaded = ZUL.sandboxOptions.loaded
+	local sandbox = ZUL.sandboxOptions
+	local wasLoaded = sandbox.loaded
+
+	-- Attempt loading (safe to call as many times as needed; it hits the 'loaded' guard inside)
 	ZUL.loadSandboxOptions()
-	
+
+	local isLoaded = sandbox.loaded
 	local logger = ZUL.new("ZUL")
-	if not wasLoaded and ZUL.sandboxOptions.loaded then
+
+	---@diagnostic disable-next-line: unnecessary-if
+	if not wasLoaded and isLoaded then
+		-- Log configuration once settings are successfully bound
 		logger:info("ZUL Framework initialized with sandbox settings")
-		logger:debug("Default log level:", ZUL.defaultLevel)
-		
-		-- Log include list
+		logger:debug("Global Level: " .. (ZUL.defaultLevel or "INFO"))
+
 		local includeCount = 0
-		for modName in pairs(ZUL.sandboxOptions.includeMods) do
-			includeCount = includeCount + 1
-		end
-		if includeCount > 0 then
-			logger:debug("Include mods count:", includeCount)
-		else
-			logger:debug("Include list empty - applying to all mods")
-		end
-		
-		-- Log exclude list
-		local excludeCount = 0
-		for modName in pairs(ZUL.sandboxOptions.excludeMods) do
-			excludeCount = excludeCount + 1
-		end
-		if excludeCount > 0 then
-			logger:debug("Exclude mods count:", excludeCount)
-		end
-	elseif not ZUL.sandboxOptions.loaded then
-		logger:info("ZUL Framework initialized (waiting for sandbox settings...)")
+		for _ in pairs(sandbox.includeMods) do includeCount = includeCount + 1 end
+		if includeCount > 0 then logger:debug("Filtering enabled for " .. includeCount .. " mods") end
+		---@diagnostic disable-next-line: unnecessary-if
+	elseif not isLoaded then
+		-- Silent in production, but here for debugging early boot state
+		logger:trace("ZUL searching for SandboxVars...")
 	end
 end
 
--- Early initialization
+-- Primary initialization path
+-- Best effort, usually too early but handles specialized environments.
 Events.OnGameBoot.Add(initializeZUL)
-
--- World initialization (where SandboxVars are guaranteed on server)
+-- Primary load point where sandbox settings become available.
+Events.OnInitGlobalModData.Add(initializeZUL)
+-- Final safety check during world generation.
 Events.OnInitWorld.Add(initializeZUL)
