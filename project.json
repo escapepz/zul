@@ -1,5 +1,5 @@
 {
-    "$schema": "https://gist.githubusercontent.com/hashtafak/1ec0f9800f4e86c74ac3f102946c88ae/raw/8b23a803ae60f9b7673945d44a81fe7ae7c55f8c/pzstudio.schema.json",
+    "$schema": "https://gist.githubusercontent.com/hashtafak/1ec0f9800f4e86c74ac3f102946c88ae/raw/3446dc36b1ff4c8ba2cd25ea604285b280c9657e/pzstudio.schema.json",
     "title": "ZUL - Zomboid Unified Logging",
     "authors": [
         "eScape"
@@ -7,7 +7,10 @@
     "workshop": {
         "visibility": "unlisted",
         "tags": [
-            "Build 42"
+            "Build 42",
+            "Framework",
+            "Misc",
+            "QoL"
         ],
         "excludes": [
             "zul_test"
