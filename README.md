@@ -61,6 +61,9 @@ ZUL.setLevel("AnotherMod", ZUL.Level.TRACE)
 -- Using child logger
 local logger = ZUL.new("MyMod")
 logger:setLevel("WARN") -- Only show WARN and above
+
+-- Disable logging entirely for a mod
+ZUL.setLevel("NoisyMod", ZUL.Level.NONE)
 ```
 
 ## Sandbox Options
@@ -70,6 +73,7 @@ ZUL provides three sandbox options for server administrators:
 ### Global Log Level
 
 Sets the default log level for all mods using ZUL. This applies to:
+
 - All mods if the Include list is empty
 - Only mods in the Include list (if specified)
 - Does NOT apply to mods in the Exclude list
@@ -83,6 +87,7 @@ Comma-separated list of mod names to apply ZUL sandbox settings to.
 **Example**: `MyMod,AnotherMod,ThirdMod`
 
 **Behavior**:
+
 - If empty: Settings apply to ALL mods (except excluded ones)
 - If specified: Settings apply ONLY to listed mods
 
@@ -93,6 +98,7 @@ Comma-separated list of mod names to exclude from ZUL sandbox settings.
 **Example**: `NoisyMod,DebugMod`
 
 **Behavior**:
+
 - These mods will use their own programmatically set log levels
 - Exclude list takes precedence over Include list
 
@@ -109,7 +115,7 @@ local ZUL = require "ZUL"
 function ZUL.logImpl(modName, fullMessage)
     -- Default behavior
     writeLog(modName, fullMessage)
-    
+
     -- Custom behavior
     sendToExternalLogger(modName, fullMessage)
 end
@@ -156,19 +162,21 @@ logger:debug("RV", "Entry", {
 If you were using the previous `SharedLogger` module:
 
 1. Update your require statement:
+
    ```lua
    -- Old
    local SharedLogger = require "utils/SharedLogger"
-   
+
    -- New
    local ZUL = require "ZUL"
    ```
 
 2. Update all references from `SharedLogger` to `ZUL`:
+
    ```lua
    -- Old
    local logger = SharedLogger.new("MyMod")
-   
+
    -- New
    local logger = ZUL.new("MyMod")
    ```
@@ -177,14 +185,27 @@ If you were using the previous `SharedLogger` module:
 
 ## API Reference
 
+### Module Constants
+
+- `ZUL.Level` - Table containing numeric log levels:
+  - `TRACE` (10)
+  - `DEBUG` (20)
+  - `INFO` (30)
+  - `WARN` (40)
+  - `ERROR` (50)
+  - `FATAL` (60)
+  - `NONE` (100) - Disables logging for the mod
+
 ### Module Functions
 
 - `ZUL.new(modName)` - Create a child logger for a mod
 - `ZUL.setLevel(modName, level)` - Set log level for a mod
 - `ZUL.getEffectiveLevel(modName)` - Get current log level for a mod
-- `ZUL.isLoggingEnabled(modName, level)` - Check if logging is enabled
+- `ZUL.isLoggingEnabled(modName, level)` - Check if logging is enabled for a mod
+- `ZUL.shouldApplySandboxSettings(modName)` - Check if sandbox logic applies to a mod
 - `ZUL.resolveLevel(level)` - Convert level name to numeric value
-- `ZUL.loadSandboxOptions()` - Load sandbox options (called automatically)
+- `ZUL.loadSandboxOptions(force)` - Load/refresh sandbox options (called automatically)
+- `ZUL.serialize(val)` - Convert tables/values to strings for logging (internal helper)
 
 ### Child Logger Methods
 
@@ -197,6 +218,7 @@ If you were using the previous `SharedLogger` module:
 - `logger:log(message, context, details)` - Log directly to console via `print()` (bypasses `ZUL.logImpl`)
 - `logger:setLevel(level)` - Set log level for this logger's mod
 - `logger:getEffectiveLevel()` - Get effective log level
+- `logger:isLoggingEnabled(level)` - Check if a specific level is enabled for this logger
 
 ## Examples
 
@@ -254,6 +276,25 @@ end
 -- Both modules share the same log level settings
 ```
 
+## Initialization Lifecycle
+
+Project Zomboid's Lua environment initializes in stages. ZUL uses a multi-stage approach to ensure settings are captured as early as possible while remaining robust in multiplayer environments where sandbox settings are synchronized after boot.
+
+### Stage 1: Boot (Early)
+
+During `OnGameBoot`, ZUL makes its first attempt to load settings. This catches mods that initialize very early. In Multiplayer, this will likely use local/default settings.
+
+### Stage 2: Sync (Mid)
+
+ZUL hooks into `OnInitGlobalModData`, `OnInitWorld`, `OnGameStart`, and `OnServerStarted` with a **force refresh** flag.
+
+- As soon as the server sends the synchronized `SandboxVars` packet, ZUL will update its internal configuration.
+- You will see `ZUL sandbox settings refreshed (Server Sync)` in the TRACE logs when this occurs.
+
+### Effect on Early Logging
+
+Mods that log _during_ the early boot sequence (before Stage 2) may use the framework's default levels (`INFO`) or local settings until the server sync completes. Once synchronized, all subsequent logs will respect the server's sandbox configuration.
+
 ## Support
 
 - **Ko-fi**: [https://ko-fi.com/escapepz](https://ko-fi.com/escapepz)
@@ -265,7 +306,15 @@ Created by eScape (@escapepz)
 
 ## Changelog
 
+### Version 1.1.0
+
+- **Multiplayer Sync Fix**: Implemented staged initialization with forced re-syncs to handle server Sandbox synchronization lag.
+- **Improved Logging**: Added state-aware initialization logs (First-time vs Refresh).
+- **Hardened Events**: Added `OnGameStart` and `OnServerStarted` as final initialization safety nets.
+- **Enhanced Guarding**: Improved state management during the complex PZ startup sequence.
+
 ### Version 1.0.0
+
 - Initial release
 - Multi-level logging support
 - Child logger API

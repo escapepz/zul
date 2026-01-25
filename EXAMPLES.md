@@ -43,14 +43,14 @@ end
 
 local function processData(data)
     logger:debug("Processing data", { size = #data })
-    
+
     -- Expensive debug operation only when needed
     if ZUL.isLoggingEnabled("MyDebugMod", ZUL.Level.TRACE) then
         logger:trace("Data details", data)
     end
-    
+
     -- ... process data ...
-    
+
     logger:info("Data processed successfully")
 end
 ```
@@ -81,7 +81,7 @@ function Database.query(table, filter)
         table = table,
         filter = filter
     })
-    
+
     -- ... query logic ...
 end
 
@@ -108,28 +108,28 @@ local logger = ZUL.new("MyRobustMod")
 
 local function safeLoadConfig()
     logger:debug("Loading configuration")
-    
+
     local success, config = pcall(function()
         -- Load config logic
         return loadConfigFile()
     end)
-    
+
     if not success then
         logger:error("Failed to load config", {
             error = tostring(config)
         })
         return nil
     end
-    
+
     logger:info("Configuration loaded successfully")
     return config
 end
 
 local function criticalOperation()
     logger:trace("Starting critical operation")
-    
+
     local result, err = performOperation()
-    
+
     if not result then
         logger:fatal("Critical operation failed", {
             error = err,
@@ -138,7 +138,7 @@ local function criticalOperation()
         -- Handle critical failure
         return false
     end
-    
+
     logger:info("Critical operation completed")
     return true
 end
@@ -153,13 +153,13 @@ local logger = ZUL.new("MyPerformanceMod")
 
 local function measurePerformance(name, fn)
     local startTime = os.clock()
-    
+
     logger:trace("Performance", "Start", { operation = name })
-    
+
     local result = fn()
-    
+
     local elapsed = os.clock() - startTime
-    
+
     if elapsed > 0.1 then
         logger:warn("Slow operation detected", {
             operation = name,
@@ -171,7 +171,7 @@ local function measurePerformance(name, fn)
             duration = elapsed
         })
     end
-    
+
     return result
 end
 
@@ -191,9 +191,9 @@ local ZUL = require "ZUL"
 local logger = ZUL.new("MyConfigurableMod")
 
 local function init()
-    -- Load sandbox options
-    ZUL.loadSandboxOptions()
-    
+    -- (Optional) Force fresh sandbox stats if sync just occurred
+    ZUL.loadSandboxOptions(true)
+
     -- Check if this mod should use ZUL settings
     if ZUL.shouldApplySandboxSettings("MyConfigurableMod") then
         logger:info("Using ZUL sandbox settings")
@@ -201,7 +201,7 @@ local function init()
         logger:info("Using custom log settings")
         logger:setLevel("DEBUG")
     end
-    
+
     -- Log current effective level
     local level = logger:getEffectiveLevel()
     logger:debug("Current log level:", level)
@@ -254,7 +254,7 @@ local function onTick()
     -- This will print DIRECTLY to the console using print()
     -- It ignores log level filtering!
     logger:log("Current Tick", os.clock())
-    
+
     -- This will only log if level is INFO or higher
     -- and uses writeLog() for persistence
     logger:info("Standard log")
@@ -272,23 +272,26 @@ end
    - FATAL: Critical failures (e.g., mod cannot continue)
 
 2. **Create One Logger Per Mod**
+
    ```lua
    -- Good
    local logger = ZUL.new("MyMod")
-   
+
    -- Avoid creating multiple loggers for the same mod
    ```
 
 3. **Use Structured Context**
+
    ```lua
    -- Good
    logger:info("Player action", { action = "craft", item = "axe" })
-   
+
    -- Less useful
    logger:info("Player crafted axe")
    ```
 
 4. **Check Log Level for Expensive Operations**
+
    ```lua
    if ZUL.isLoggingEnabled("MyMod", ZUL.Level.DEBUG) then
        local expensiveData = collectAllDebugInfo()

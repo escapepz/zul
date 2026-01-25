@@ -23,21 +23,25 @@ logger:log("Direct console log") -- Prints directly to console
 ## Common Patterns
 
 ### 1. Simple Message
+
 ```lua
 logger:info("Player spawned")
 ```
 
 ### 2. Message with Data
+
 ```lua
 logger:debug("Processing items", { count = 10, type = "weapon" })
 ```
 
 ### 3. Error Logging
+
 ```lua
 logger:error("Failed to load config", { reason = "File not found" })
 ```
 
 ### 4. Different Log Levels
+
 ```lua
 logger:trace("Very detailed info")  -- Most verbose
 logger:debug("Debug info")
@@ -53,6 +57,7 @@ logger:log("Quick debug message")   -- Uses print()
 ## Setting Log Levels
 
 ### In Your Code
+
 ```lua
 local ZUL = require "ZUL"
 
@@ -74,17 +79,19 @@ logger:setLevel("DEBUG")
    - **Include Mods**: List mods to apply settings to (optional)
    - **Exclude Mods**: List mods to ignore (optional)
 
+> **Important Note on Initialization**: In Multiplayer, settings may take a few moments to synchronize after the game boots. ZUL automatically refreshes its configuration as soon as the server data arrives. If you log very early during the boot sequence, the default `INFO` level may be used until synchronization completes.
+
 ## Log Levels Explained
 
-| Level | When to Use | Example |
-|-------|-------------|---------|
+| Level | When to Use                              | Example                              |
+| ----- | ---------------------------------------- | ------------------------------------ |
 | TRACE | Loop iterations, very detailed debugging | `logger:trace("Processing item", i)` |
-| DEBUG | Function calls, data processing | `logger:debug("Loading config")` |
-| INFO | Important events, initialization | `logger:info("Mod initialized")` |
-| WARN | Warnings, deprecated usage | `logger:warn("Slow operation")` |
-| ERROR | Errors, failed operations | `logger:error("Failed to save")` |
-| FATAL | Critical failures | `logger:fatal("Cannot continue")` |
-| (log) | Quick debugging, direct console output | `logger:log("Test message")` |
+| DEBUG | Function calls, data processing          | `logger:debug("Loading config")`     |
+| INFO  | Important events, initialization         | `logger:info("Mod initialized")`     |
+| WARN  | Warnings, deprecated usage               | `logger:warn("Slow operation")`      |
+| ERROR | Errors, failed operations                | `logger:error("Failed to save")`     |
+| FATAL | Critical failures                        | `logger:fatal("Cannot continue")`    |
+| (log) | Quick debugging, direct console output   | `logger:log("Test message")`         |
 
 ## Complete Example
 
@@ -128,18 +135,21 @@ Logs are written to Project Zomboid's log files:
 **Location**: `C:\Users\<YourName>\Zomboid\Logs\`
 
 **Files**:
+
 - `YourModName.txt` - Your mod's log file
 - `console.txt` - General console output
 
 ## Tips
 
 ✅ **DO**:
+
 - Use appropriate log levels
 - Include useful context data
 - Create one logger per mod
 - Use structured logging (pass objects)
 
 ❌ **DON'T**:
+
 - Log in tight loops (use TRACE level)
 - Log sensitive data (passwords, tokens)
 - Create multiple loggers for the same mod

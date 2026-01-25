@@ -1,6 +1,6 @@
 -- @author eScape <https://github.com/escapepz/ZUL>
 
--- ZUL.lua (Zomboid Unified Logging)
+-- media/lua/shared/ZUL.lua (Zomboid Unified Logging)
 -- A unified logging framework for Project Zomboid mods
 -- Features: Multi-level logging, child loggers, sandbox options integration
 -- Inspired by pino/winston for Lua/Project Zomboid
@@ -39,6 +39,7 @@ ZUL.sandboxOptions = {
 	excludeMods = {},
 	loaded = false
 }
+ZUL._initLogged = false
 
 --- Default logging implementation (can be redefined by external mods)
 --- @param modName string Name of the mod
@@ -59,9 +60,10 @@ function ZUL.resolveLevel(level)
 end
 
 --- Load sandbox options and apply settings
-function ZUL.loadSandboxOptions()
+--- @param force boolean? If true, re-load even if already loaded (useful for server sync)
+function ZUL.loadSandboxOptions(force)
 	---@diagnostic disable-next-line: unnecessary-if
-	if ZUL.sandboxOptions.loaded then return end
+	if ZUL.sandboxOptions.loaded and not force then return end
 
 	local sandboxVars = SandboxVars
 	---@diagnostic disable-next-line: undefined-field
@@ -160,11 +162,8 @@ function ZUL.getEffectiveLevel(modName)
 		return ZUL.modLevels[modName]
 	end
 
-	---@diagnostic disable-next-line: unnecessary-if
-	-- Try to load sandbox options if not loaded yet
-	if not ZUL.sandboxOptions.loaded then
-		ZUL.loadSandboxOptions()
-	end
+	-- Sandbox settings are managed by ZUL_Init.lua lifecycle events.
+	-- If not loaded yet, we fall through to ZUL.defaultLevel.
 
 	---@diagnostic disable-next-line: unnecessary-if
 	-- Apply sandbox settings if applicable
@@ -299,12 +298,6 @@ end
 --- @param modName string
 --- @return table
 function ZUL.new(modName)
-	---@diagnostic disable-next-line: unnecessary-if
-	-- Proactive attempt to bind settings if this is the first logger created
-	if not ZUL.sandboxOptions.loaded then
-		ZUL.loadSandboxOptions()
-	end
-
 	local child = {}
 
 	function child:trace(msg, ctx, det) ZUL.trace(modName, msg, ctx, det) end
@@ -325,10 +318,10 @@ function ZUL.new(modName)
 
 	function child:getEffectiveLevel() return ZUL.getEffectiveLevel(modName) end
 
+	function child:isLoggingEnabled(level) return ZUL.isLoggingEnabled(modName, level) end
+
 	return child
 end
 
--- Attempt early load (usually fails during script load, but harmless)
-ZUL.loadSandboxOptions()
-
+-- ZUL module loaded
 return ZUL

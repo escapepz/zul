@@ -16,15 +16,21 @@ In Project Zomboid, Lua scripts are often parsed and executed before the game en
 
 ### The Multi-Path Initialization
 
-To ensure ZUL captures sandbox settings as early as possible without crashing, it uses a three-stage initialization in `ZUL_Init.lua`:
+To ensure ZUL captures sandbox settings as early as possible without crashing, it uses a five-stage initialization in `ZUL_Init.lua`:
 
-1.  **`OnGameBoot`**: The earliest possible hook. Usually too early for SandboxVars, but handles specialized environments or fast-loading components.
-2.  **`OnInitGlobalModData`**: **The Primary Hook.** This is the earliest reliable point after the engine has bound Sandbox Options.
-3.  **`OnInitWorld`**: The final fallback to ensure settings are active before the player enters the game world.
+1.  **`OnGameBoot`**: The earliest possible hook. Processes local settings; useful for local play and fast-loading mods.
+2.  **`OnInitGlobalModData`**: **The Primary Hook.** Fired when global mod data is ready. In Multiplayer, this is often the point of server settings synchronization. (Forces a refresh).
+3.  **`OnInitWorld`**: Fired after the world has initialized. A key safety net for world-logic mods. (Forces a refresh).
+4.  **`OnGameStart`**: Triggered when the player physically enters the world. Final client-side fallback. (Forces a refresh).
+5.  **`OnServerStarted`**: Triggered when the server setup completes. Final server-side fallback. (Forces a refresh).
+
+### Forced Synchronization
+
+Project Zomboid Multiplayer has a known delay between script execution and full Sandbox synchronization. ZUL solves this by allowing **Forced Refreshes** in its lifecycle events. While the first boot might use defaults, subsequent events will overwrite them as soon as the real server data arrives. This ensures that the framework eventually holds the correct levels for the duration of the session.
 
 ### Proactive Self-Healing
 
-Every time a mod author calls `ZUL.new()`, the framework internally checks if settings are loaded. If the game engine just made them available, ZUL "snags" them immediately without waiting for the next event trigger.
+Every time a mod author calls `ZUL.new()`, the framework internally checks if settings are loaded. If the game engine just made them available, ZUL "snags" them immediately without waiting for the next event trigger. (Refreshes are handled by the lifecycle events above).
 
 ## 3. Log Level Hierarchy (Sovereignty)
 

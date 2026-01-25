@@ -49,10 +49,16 @@ Check the `.tmp/` directory for the following log files and behaviors:
 - **Evidence**: The "DEBUG" and "TRACE" messages must be **MISSING**.
 - **Reasoning**: Since an `IncludeMods` list exists and `ZUL_Server` is not on it, it is ignored by the global override.
 
+### 4. Sync Refresh Verification (Lifecycle)
+
+- **Expectation**: ZUL performs multiple refresh passes to catch the server sync.
+- **Evidence**: Look for `[TRACE] ZUL sandbox settings refreshed (Server Sync)` in the `ZUL.txt` log file.
+- **Significance**: Confirms that although ZUL initialized on `OnGameBoot` with local settings, it successfully updated to server settings via `OnInitGlobalModData`.
+
 ## Phase 4: Troubleshooting
 
 If `ZUL_Client` does not show `DEBUG` logs:
 
 1.  Verify spelling of the mod name in `IncludeMods` (must exactly match the string passed to `ZUL.new()`).
 2.  Check `ARCHITECT_ZUL.md` to ensure the logic hierarchy is understood.
-3.  Check the `console.txt` for `[ZUL] [INFO] ZUL Framework initialized with sandbox settings` to confirm settings were actually read.
+3.  Check the `console.txt` for `[ZUL] [TRACE] ZUL sandbox settings refreshed (Server Sync)` to confirm synchronization occurred.
