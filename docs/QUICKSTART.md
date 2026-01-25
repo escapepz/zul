@@ -157,7 +157,7 @@ Logs are written to Project Zomboid's log files:
 
 ## Need Help?
 
-- 📖 **Full Documentation**: See `README.md`
+- 📖 **Full Documentation**: See [README.md](../README.md)
 - 💡 **More Examples**: See `EXAMPLES.md`
 - 🐛 **Issues**: Report on GitHub
 - ☕ **Support**: https://ko-fi.com/escapepz

@@ -1,6 +1,17 @@
 # ZUL - Zomboid Unified Logging
 
+**Version: 1.1.0**
+
 A unified logging framework for Project Zomboid mods with multi-level logging support, child loggers, and configurable sandbox options.
+
+## 📚 Documentation
+
+- [Quick Start Guide](docs/QUICKSTART.md) — Get started in 5 minutes
+- [Usage Examples](docs/EXAMPLES.md) — Practical code snippets and patterns
+- [Architectural Decisions](docs/ARCHITECT_ZUL.md) — Design philosophy and lifecycle details
+- [Sandbox Testing Guide](docs/SANDBOX_TESTING.md) — How to verify settings in-game
+- [Integration Test Protocol](docs/TEST.md) — Step-by-step verification flow
+- [Implementation Summary](docs/IMPLEMENTATION_SUMMARY.md) — Technical overview of the framework
 
 ## Features
 

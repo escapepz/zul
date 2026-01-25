@@ -34,33 +34,22 @@ The SharedLogger has been successfully refactored into **ZUL (Zomboid Unified Lo
   - Translations for all sandbox options
 
 - ✅ **project.json** - Updated with ZUL branding
-  - Location: `project.json`
+  - Location: `../project.json`
 
 ### Documentation
 
 - ✅ **README.md** - Comprehensive documentation
-  - Installation guide
-  - API reference
-  - Usage examples
-  - Migration guide
-
+  - Location: `../README.md`
 - ✅ **EXAMPLES.md** - Practical examples for developers
-  - 7 detailed examples
-  - Best practices
-  - Common patterns
-
+  - Location: `./EXAMPLES.md`
 - ✅ **description.txt** - Workshop description
-  - Location: `workshop/description.txt`
-  - Steam Workshop formatted description
-
+  - Location: `../workshop/description.txt`
 - ✅ **SANDBOX_TESTING.md** - Sandbox verification guide
-  - 4 test scenarios for Include/Exclude logic
+  - Location: `./SANDBOX_TESTING.md`
 
-### Legacy Files
+### Legacy Cleanup ✅
 
-- ⚠️ **SharedLogger.lua** - Still present for reference
-  - Location: `42.13.1/media/lua/shared/utils/SharedLogger.lua`
-  - Can be removed once migration is complete
+- **SharedLogger.lua**: Successfully removed. The transition to ZUL is complete and all old logic has been purged.
 
 ## Features Implemented
 
@@ -76,6 +65,8 @@ The SharedLogger has been successfully refactored into **ZUL (Zomboid Unified Lo
 - Child logger factory pattern
 - Server/Client/Single-player identification
 - Structured logging support
+- **Table serialization**: Automatic recursive conversion of Lua tables to strings
+- **Exposed Check**: `isLoggingEnabled` accessible directly on child loggers (v1.1.0)
 - **Direct Console Logging**: `.log()` method bypasses `writeLog` for immediate `print()` output
 
 ### 3. Sandbox Options Integration ✅
@@ -86,20 +77,20 @@ The SharedLogger has been successfully refactored into **ZUL (Zomboid Unified Lo
 - Automatic multi-stage loading
 - Smart filtering logic
 
-### 3. Include/Exclude Filtering ✅
+### 4. Include/Exclude Filtering ✅
 
 - Empty include list = apply to all mods
 - Specified include list = apply only to listed mods
 - Exclude list takes precedence
 - ZUL itself is always excluded from sandbox settings
 
-### 4. Direct Console Support ✅
+### 5. Direct Console Support ✅
 
 - `.log()` methods use `print()` for immediate developer feedback
 - Bypasses `ZUL.logImpl` to avoid file I/O overhead during quick debugging
 - Level-specific methods (`info`, `warn`, etc.) still use `writeLog`
 
-### 5. Backward Compatibility ✅
+### 6. Backward Compatibility ✅
 
 - Same API as SharedLogger
 - Drop-in replacement (just change require path)
@@ -223,6 +214,13 @@ logger:error("Failed to load", errorDetails)
 
 ```
 esc_zul/
+├── docs/                      <-- All documentation moved here
+│   ├── ARCHITECT_ZUL.md
+│   ├── EXAMPLES.md
+│   ├── IMPLEMENTATION_SUMMARY.md
+│   ├── QUICKSTART.md
+│   ├── SANDBOX_TESTING.md
+│   └── TEST.md
 ├── zul/
 │   ├── 42.13.1/
 │   │   └── media/
@@ -231,8 +229,6 @@ esc_zul/
 │   │       │       ├── Translate/
 │   │       │       │   └── EN/
 │   │       │       │       └── Sandbox_EN.txt
-│   │       │       ├── utils/
-│   │       │       │   └── SharedLogger.lua (legacy)
 │   │       │       ├── ZUL.lua
 │   │       │       ├── ZUL_Init.lua
 │   │       │       └── ZUL_Test.lua
@@ -242,9 +238,7 @@ esc_zul/
 │   └── poster.png
 ├── workshop/
 │   └── description.txt
-├── README.md
-├── EXAMPLES.md
-├── SANDBOX_TESTING.md
+├── README.md                  <-- Main entry point
 ├── project.json
 └── package.json
 ```
