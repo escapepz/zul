@@ -1,0 +1,6 @@
+name=ZUL Test Performance
+id=zul_test_performance
+description=
+poster=poster.png
+icon=icon.png
+require=\zul

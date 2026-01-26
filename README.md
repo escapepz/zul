@@ -11,6 +11,7 @@ A unified logging framework for Project Zomboid mods with multi-level logging su
 - [Architectural Decisions](docs/ARCHITECT_ZUL.md) — Design philosophy and lifecycle details
 - [Sandbox Testing Guide](docs/SANDBOX_TESTING.md) — How to verify settings in-game
 - [Integration Test Protocol](docs/TEST.md) — Step-by-step verification flow
+- [Benchmark Results](benchmark/RESULT.md) — Performance benchmarks and stress test results
 - [Implementation Summary](docs/IMPLEMENTATION_SUMMARY.md) — Technical overview of the framework
 
 ## Features
