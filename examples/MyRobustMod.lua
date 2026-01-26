@@ -2,6 +2,16 @@
 local ZUL = require "ZUL"
 local logger = ZUL.new("MyRobustMod")
 
+local function loadConfigFile()
+    -- Load config logic
+    return false, "Configuration failed"
+end
+
+local function performOperation()
+    -- Perform operation logic
+    return false, "Operation failed"
+end
+
 local function safeLoadConfig()
     logger:debug("Loading configuration")
 
@@ -26,6 +36,7 @@ local function criticalOperation()
 
     local result, err = performOperation()
 
+    ---@diagnostic disable-next-line: unnecessary-if
     if not result then
         logger:fatal("Critical operation failed", {
             error = err,

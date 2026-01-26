@@ -37,6 +37,7 @@ local logger = ZUL.new("MyDebugMod")
 -- Enable debug mode during development
 local DEBUG_MODE = true
 
+---@diagnostic disable-next-line: unnecessary-if
 if DEBUG_MODE then
     logger:setLevel("DEBUG")
 end
@@ -69,7 +70,9 @@ function Core.init()
 end
 
 return Core
+```
 
+```lua
 -- Database.lua
 local ZUL = require "ZUL"
 local logger = ZUL.new("MyComplexMod")
@@ -86,7 +89,9 @@ function Database.query(table, filter)
 end
 
 return Database
+```
 
+```lua
 -- Main.lua
 local Core = require "Core"
 local Database = require "Database"
@@ -259,6 +264,38 @@ local function onTick()
     -- and uses writeLog() for persistence
     logger:info("Standard log")
 end
+```
+
+## Example 9: Defensive Logger (Optional Dependency)
+
+If you want your mod to work with or without ZUL, you can use a defensive wrapper.
+
+```lua
+-- MyDefensiveMod.lua
+local hasZUL, ZUL = pcall(require, "ZUL")
+local logger = nil
+
+if hasZUL and type(ZUL) == "table" and type(ZUL.new) == "function" then
+    local ok, result = pcall(ZUL.new, "MyDefensiveMod")
+    if ok and result then
+        logger = result
+        pcall(function() logger:info("ZUL detected and enabled") end)
+    end
+end
+
+local function safeLog(msg, debug)
+    if logger then
+        if debug then
+            pcall(function() logger:debug(msg) end)
+        else
+            pcall(function() logger:info(msg) end)
+        end
+    elseif not debug then
+        print("[MyDefensiveMod] " .. tostring(msg))
+    end
+end
+
+return safeLog
 ```
 
 ## Best Practices

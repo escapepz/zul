@@ -5,6 +5,7 @@ local logger = ZUL.new("MyDebugMod")
 -- Enable debug mode during development
 local DEBUG_MODE = true
 
+---@diagnostic disable-next-line: unnecessary-if
 if DEBUG_MODE then
     logger:setLevel("DEBUG")
 end
