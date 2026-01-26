@@ -48,8 +48,5 @@ If no permission is received you may not alter the mod, and it must be treated a
 
 [hr][/hr]
 [b]Build 42 | Server | Client | Utility | Framework[/b]
-
-
-
-
+[img]https://images.steamusercontent.com/ugc/819002974403344349/DD18664314A26EA83C62E9B0127FFCB35092B53A/[/img]
 _____
