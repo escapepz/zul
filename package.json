@@ -1,13 +1,15 @@
 {
-    "scripts": {
-        "clean": "pzstudio clean",
-        "build": "pzstudio clean && pzstudio build",
-        "watch": "pzstudio clean && pzstudio build && pzstudio watch",
-        "update": "pzstudio update",
-        "generate:poster": "mkdir images 2>nul & magick -size 512x512 xc:\"#121212\" -stroke \"#FFD400\" -strokewidth 4 -fill none -draw \"rectangle 2,2 510,510\" -gravity center -font Arial -fill \"#FFD400\" -pointsize 120 -annotate +0-40 \"{ ZUL }\" -stroke none -fill \"#D6D6D6\" -pointsize 32 -annotate +0+70 \"Zomboid Unified Logging\" -strip -alpha off -depth 8 PNG24:images/poster.png",
-        "generate:preview": "magick images/poster.png -resize 256x256 -filter Lanczos -define filter:blur=0.9 -strip -alpha off -depth 8 PNG24:images/preview.png",
-        "generate:icon": "magick images/poster.png -resize 32x32 -filter Lanczos -define filter:blur=1.2 -strip -alpha off -depth 8 PNG24:images/icon.png",
-        "setup:nonsteam": "mklink /J \"C:\\ZomboidClient1\\mods\\zul\" \"%CD%\\zul\"",
-        "setup:nonsteam:test": "mklink /J \"C:\\ZomboidClient1\\mods\\zul_test\" \"%CD%\\zul_test\""
-    }
+  "scripts": {
+    "clean": "pzstudio clean",
+    "build": "pzstudio clean && pzstudio build",
+    "watch": "pzstudio clean && pzstudio build && pzstudio watch",
+    "update": "pzstudio update",
+    "generate:poster": "mkdir images 2>nul & magick -size 512x512 xc:\"#121212\" -stroke \"#FFD400\" -strokewidth 4 -fill none -draw \"rectangle 2,2 510,510\" -gravity center -font Arial -fill \"#FFD400\" -pointsize 120 -annotate +0-40 \"{ ZUL }\" -stroke none -fill \"#D6D6D6\" -pointsize 32 -annotate +0+70 \"Zomboid Unified Logging\" -strip -alpha off -depth 8 PNG24:images/poster.png",
+    "generate:preview": "magick images/poster.png -resize 256x256 -filter Lanczos -define filter:blur=0.9 -strip -alpha off -depth 8 PNG24:images/preview.png",
+    "generate:icon": "magick images/poster.png -resize 32x32 -filter Lanczos -define filter:blur=1.2 -strip -alpha off -depth 8 PNG24:images/icon.png",
+    "setup:nonsteam": "mklink /J \"C:\\ZomboidClient1\\mods\\zul\" \"%CD%\\zul\"",
+    "setup:nonsteam:test": "mklink /J \"C:\\ZomboidClient1\\mods\\zul_test\" \"%CD%\\zul_test\"",
+    "setup:nonsteam:test:guardrails": "mklink /J \"C:\\ZomboidClient1\\mods\\zul_test_guardrails\" \"%CD%\\zul_test_guardrails\"",
+    "setup:nonsteam:test:performance": "mklink /J \"C:\\ZomboidClient1\\mods\\zul_test_performance\" \"%CD%\\zul_test_performance\""
+  }
 }

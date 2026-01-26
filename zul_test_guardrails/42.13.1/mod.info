@@ -1,0 +1,6 @@
+name=ZUL Test Guardrails
+id=zul_test_guardrails
+description=
+poster=poster.png
+icon=icon.png
+require=\zul
