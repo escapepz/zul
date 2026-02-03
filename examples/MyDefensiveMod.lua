@@ -8,22 +8,26 @@ if hasZUL and type(ZUL) == "table" and type(ZUL.new) == "function" then
 	if ok and result then
 		logger = result
 		---@diagnostic disable-next-line: need-check-nil
-		pcall(function() logger:info("ZUL detected and enabled") end)
+		pcall(function()
+			logger:info("ZUL detected and enabled")
+		end)
 	end
 end
 
 local function safeLog(msg, debug)
-	if logger then
-		if debug then
-			---@diagnostic disable-next-line: need-check-nil
-			pcall(function() logger:debug(msg) end)
-		else
-			---@diagnostic disable-next-line: need-check-nil
-			pcall(function() logger:info(msg) end)
-		end
-	elseif not debug then
+	if not logger and not debug then
 		print("[" .. LOG_MODULE_NAME .. "] " .. tostring(msg))
+		return
 	end
+
+	if not logger then
+		return
+	end
+
+	---@diagnostic disable-next-line: need-check-nil
+	pcall(function()
+		(debug and logger.debug or logger.info)(logger, msg)
+	end)
 end
 
 return safeLog
