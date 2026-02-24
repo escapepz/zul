@@ -3,3 +3,4 @@ id=zul_test
 description=
 poster=poster.png
 icon=icon.png
+required=\zul

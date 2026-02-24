@@ -1,5 +1,5 @@
 -- MyPerformanceMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyPerformanceMod")
 
 local function measurePerformance(name, fn)

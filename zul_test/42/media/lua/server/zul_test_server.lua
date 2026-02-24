@@ -4,7 +4,7 @@
 -- Scenario: Untracked (Not in Include list)
 -- Expected: Should stay at INFO (default) even if Global is DEBUG
 
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("ZUL_Server")
 
 local function runServerTests()

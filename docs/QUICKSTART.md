@@ -12,7 +12,7 @@ Get started with ZUL (Zomboid Unified Logging) in 5 minutes!
 
 ```lua
 -- Add this to the top of your Lua file
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("YourModName")
 
 -- Now you can log!
@@ -59,7 +59,7 @@ logger:log("Quick debug message")   -- Uses print()
 ### In Your Code
 
 ```lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 
 -- Set level for your mod
 ZUL.setLevel("YourModName", "DEBUG")
@@ -75,9 +75,9 @@ logger:setLevel("DEBUG")
 2. Go to **Sandbox Options**
 3. Find **ZUL - Zomboid Unified Logging** section
 4. Set your preferences:
-   - **Global Log Level**: Choose from TRACE to FATAL
-   - **Include Mods**: List mods to apply settings to (optional)
-   - **Exclude Mods**: List mods to ignore (optional)
+    - **Global Log Level**: Choose from TRACE to FATAL
+    - **Include Mods**: List mods to apply settings to (optional)
+    - **Exclude Mods**: List mods to ignore (optional)
 
 > **Important Note on Initialization**: In Multiplayer, settings may take a few moments to synchronize after the game boots. ZUL automatically refreshes its configuration as soon as the server data arrives. If you log very early during the boot sequence, the default `INFO` level may be used until synchronization completes.
 
@@ -97,7 +97,7 @@ logger:setLevel("DEBUG")
 
 ```lua
 -- MyAwesomeMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyAwesomeMod")
 
 -- Optional: Set log level during development
@@ -165,7 +165,7 @@ Logs are written to Project Zomboid's log files:
 ## Next Steps
 
 1. ✅ Install ZUL
-2. ✅ Add `local ZUL = require "ZUL"` to your mod
+2. ✅ Add `local ZUL = require("zul")` to your mod
 3. ✅ Create a logger: `local logger = ZUL.new("YourMod")`
 4. ✅ Start logging: `logger:info("Hello World!")`
 5. 🎉 You're done!

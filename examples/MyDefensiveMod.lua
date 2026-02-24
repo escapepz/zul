@@ -1,5 +1,5 @@
 -- MyDefensiveMod.lua aka safeLogger.lua
-local hasZUL, ZUL = pcall(require, "ZUL")
+local hasZUL, ZUL = pcall(require, "zul")
 local logger = nil
 local LOG_MODULE_NAME = "MyDefensiveMod"
 

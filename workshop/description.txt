@@ -14,7 +14,7 @@ A unified logging framework for Project Zomboid mods with multi-level logging su
 
 [h2]Usage Example[/h2]
 [code]
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyMod")
 
 logger:info("Player entered RV")

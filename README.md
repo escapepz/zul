@@ -35,7 +35,7 @@ A unified logging framework for Project Zomboid mods with multi-level logging su
 ### Basic Usage
 
 ```lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyMod")
 
 -- Simple logging
@@ -64,7 +64,7 @@ ZUL supports 6 log levels (from most to least verbose):
 ### Setting Log Levels Programmatically
 
 ```lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 
 -- Set log level for a specific mod
 ZUL.setLevel("MyMod", "DEBUG")
@@ -121,7 +121,7 @@ Comma-separated list of mod names to exclude from ZUL sandbox settings.
 You can override how ZUL handles level-specific logging (TRACE, DEBUG, INFO, WARN, ERROR, FATAL). Note that `.log()` bypasses this and always uses `print()`.
 
 ```lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 
 -- Custom log handler (e.g., send to external service)
 function ZUL.logImpl(modName, fullMessage)
@@ -175,23 +175,23 @@ If you were using the previous `SharedLogger` module:
 
 1. Update your require statement:
 
-   ```lua
-   -- Old
-   local SharedLogger = require "utils/SharedLogger"
+    ```lua
+    -- Old
+    local SharedLogger = require "utils/SharedLogger"
 
-   -- New
-   local ZUL = require "ZUL"
-   ```
+    -- New
+    local ZUL = require("zul")
+    ```
 
 2. Update all references from `SharedLogger` to `ZUL`:
 
-   ```lua
-   -- Old
-   local logger = SharedLogger.new("MyMod")
+    ```lua
+    -- Old
+    local logger = SharedLogger.new("MyMod")
 
-   -- New
-   local logger = ZUL.new("MyMod")
-   ```
+    -- New
+    local logger = ZUL.new("MyMod")
+    ```
 
 3. The API is fully backward compatible - no other changes needed!
 
@@ -200,13 +200,13 @@ If you were using the previous `SharedLogger` module:
 ### Module Constants
 
 - `ZUL.Level` - Table containing numeric log levels:
-  - `TRACE` (10)
-  - `DEBUG` (20)
-  - `INFO` (30)
-  - `WARN` (40)
-  - `ERROR` (50)
-  - `FATAL` (60)
-  - `NONE` (100) - Disables logging for the mod
+    - `TRACE` (10)
+    - `DEBUG` (20)
+    - `INFO` (30)
+    - `WARN` (40)
+    - `ERROR` (50)
+    - `FATAL` (60)
+    - `NONE` (100) - Disables logging for the mod
 
 ### Module Functions
 
@@ -237,7 +237,7 @@ If you were using the previous `SharedLogger` module:
 ### Example 1: Basic Mod Logging
 
 ```lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyAwesomeMod")
 
 local function onPlayerDeath(player)
@@ -253,7 +253,7 @@ Events.OnPlayerDeath.Add(onPlayerDeath)
 ### Example 2: Conditional Debug Logging
 
 ```lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("PerformanceMod")
 
 local function expensiveOperation()
@@ -270,7 +270,7 @@ end
 
 ```lua
 -- ModuleA.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyMod")
 
 function ModuleA.init()
@@ -278,7 +278,7 @@ function ModuleA.init()
 end
 
 -- ModuleB.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyMod")
 
 function ModuleB.init()

@@ -30,7 +30,7 @@ Provides `ZUL.traceHeavy(logger, action, payload)`, which ensures that heavy ser
 To enable these guardrails in your mod, simply require the extension after ZUL has loaded:
 
 ```lua
-local hasZUL, ZUL = pcall(require, "ZUL")
+local hasZUL, ZUL = pcall(require, "zul")
 if hasZUL then
     require "examples/guardrails/MyZULGuardrails"
 end

@@ -4,7 +4,7 @@
 local MODULE_NAME = "GuardrailsTest"
 
 -- 1. Integration Setup
-local hasZUL, ZUL = pcall(require, "ZUL")
+local hasZUL, ZUL = pcall(require, "zul")
 if not hasZUL or type(ZUL) ~= "table" or not ZUL.serialize then
     print("[" .. MODULE_NAME .. "] ZUL not found or invalid! Hooks not applied.")
     return

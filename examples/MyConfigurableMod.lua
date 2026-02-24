@@ -1,5 +1,5 @@
 -- MyConfigurableMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyConfigurableMod")
 
 local function init()

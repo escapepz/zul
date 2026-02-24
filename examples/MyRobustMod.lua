@@ -1,5 +1,5 @@
 -- MyRobustMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyRobustMod")
 
 local function loadConfigFile()

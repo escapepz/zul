@@ -9,43 +9,43 @@ The SharedLogger has been successfully refactored into **ZUL (Zomboid Unified Lo
 ### Core Framework
 
 - ✅ **ZUL.lua** - Main logging framework with sandbox integration
-  - Location: `zul/42.13.1/media/lua/shared/ZUL.lua`
-  - Features: Multi-level logging, child loggers, sandbox options support, **direct print support**
+    - Location: `zul/42.13.1/media/lua/shared/ZUL.lua`
+    - Features: Multi-level logging, child loggers, sandbox options support, **direct print support**
 - ✅ **ZUL_Init.lua** - Initialization script
-  - Location: `zul/42.13.1/media/lua/shared/ZUL_Init.lua`
-  - Loads sandbox options on game boot
+    - Location: `zul/42.13.1/media/lua/shared/ZUL_Init.lua`
+    - Loads sandbox options on game boot
 
 - ✅ **ZUL_Test.lua** - Test suite
-  - Location: `zul/42.13.1/media/lua/shared/ZUL_Test.lua`
-  - Comprehensive tests for all features
+    - Location: `zul/42.13.1/media/lua/shared/ZUL_Test.lua`
+    - Comprehensive tests for all features
 
 ### Configuration Files
 
 - ✅ **mod.info** - Mod metadata
-  - Location: `zul/42.13.1/mod.info`
-  - Defines mod name, ID, description
+    - Location: `zul/42.13.1/mod.info`
+    - Defines mod name, ID, description
 
 - ✅ **sandbox-options.txt** - Sandbox options definition
-  - Location: `zul/42.13.1/media/sandbox-options.txt`
-  - Defines 3 options: GlobalLogLevel, IncludeMods, ExcludeMods
+    - Location: `zul/42.13.1/media/sandbox-options.txt`
+    - Defines 3 options: GlobalLogLevel, IncludeMods, ExcludeMods
 
 - ✅ **Sandbox_EN.txt** - English translations
-  - Location: `zul/42.13.1/media/lua/shared/Translate/EN/Sandbox_EN.txt`
-  - Translations for all sandbox options
+    - Location: `zul/42.13.1/media/lua/shared/Translate/EN/Sandbox_EN.txt`
+    - Translations for all sandbox options
 
 - ✅ **project.json** - Updated with ZUL branding
-  - Location: `../project.json`
+    - Location: `../project.json`
 
 ### Documentation
 
 - ✅ **README.md** - Comprehensive documentation
-  - Location: `../README.md`
+    - Location: `../README.md`
 - ✅ **EXAMPLES.md** - Practical examples for developers
-  - Location: `./EXAMPLES.md`
+    - Location: `./EXAMPLES.md`
 - ✅ **description.txt** - Workshop description
-  - Location: `../workshop/description.txt`
+    - Location: `../workshop/description.txt`
 - ✅ **SANDBOX_TESTING.md** - Sandbox verification guide
-  - Location: `./SANDBOX_TESTING.md`
+    - Location: `./SANDBOX_TESTING.md`
 
 ### Legacy Cleanup ✅
 
@@ -102,7 +102,7 @@ The SharedLogger has been successfully refactored into **ZUL (Zomboid Unified Lo
 
 ```lua
 -- Simple usage
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyMod")
 
 logger:info("Player spawned")
@@ -114,9 +114,9 @@ logger:error("Failed to load", errorDetails)
 
 1. Enable ZUL mod
 2. Configure sandbox options:
-   - Set global log level (default: INFO)
-   - Add mods to include list (optional)
-   - Add mods to exclude list (optional)
+    - Set global log level (default: INFO)
+    - Add mods to include list (optional)
+    - Add mods to exclude list (optional)
 3. Start game
 
 ## Testing Checklist
@@ -144,45 +144,45 @@ logger:error("Failed to load", errorDetails)
 
 1. **Update require statement:**
 
-   ```lua
-   -- Old
-   local SharedLogger = require "utils/SharedLogger"
+    ```lua
+    -- Old
+    local SharedLogger = require "utils/SharedLogger"
 
-   -- New
-   local ZUL = require "ZUL"
-   ```
+    -- New
+    local ZUL = require("zul")
+    ```
 
 2. **Update variable names:**
 
-   ```lua
-   -- Old
-   local logger = SharedLogger.new("MyMod")
+    ```lua
+    -- Old
+    local logger = SharedLogger.new("MyMod")
 
-   -- New
-   local logger = ZUL.new("MyMod")
-   ```
+    -- New
+    local logger = ZUL.new("MyMod")
+    ```
 
 3. **No other changes needed!** The API is 100% compatible.
 
 ## Next Steps
 
 1. **Remove SharedLogger.lua** (optional)
-   - Once migration is confirmed working
-   - Location: `zul/42.13.1/media/lua/shared/utils/SharedLogger.lua`
+    - Once migration is confirmed working
+    - Location: `zul/42.13.1/media/lua/shared/utils/SharedLogger.lua`
 
 2. **Test in Project Zomboid**
-   - Load the mod
-   - Check console output
-   - Verify sandbox options work
+    - Load the mod
+    - Check console output
+    - Verify sandbox options work
 
 3. **Publish to Workshop**
-   - Update workshop description
-   - Upload to Steam Workshop
-   - Share with community
+    - Update workshop description
+    - Upload to Steam Workshop
+    - Share with community
 
 4. **Create Example Mod**
-   - Demonstrate ZUL usage
-   - Help other developers adopt it
+    - Demonstrate ZUL usage
+    - Help other developers adopt it
 
 ## Sandbox Options Reference
 
@@ -190,12 +190,12 @@ logger:error("Failed to load", errorDetails)
 
 - **Type**: Enum (dropdown)
 - **Options**:
-  1. TRACE (Most Verbose)
-  2. DEBUG
-  3. INFO (Default)
-  4. WARN
-  5. ERROR
-  6. FATAL (Least Verbose)
+    1. TRACE (Most Verbose)
+    2. DEBUG
+    3. INFO (Default)
+    4. WARN
+    5. ERROR
+    6. FATAL (Least Verbose)
 - **Default**: 3 (INFO)
 
 ### Include Mods

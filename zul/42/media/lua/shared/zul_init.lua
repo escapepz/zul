@@ -4,7 +4,7 @@
 -- Initialization script for ZUL framework
 -- Loads sandbox options on game start
 
-local ZUL = require "zul"
+local ZUL = require("zul")
 
 local function initializeZUL(force)
 	local sandbox = ZUL.sandboxOptions

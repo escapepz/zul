@@ -4,7 +4,7 @@
 -- Scenario: Included in Global Log Level
 -- Expected: Should adopt Global Level (e.g., DEBUG/TRACE messages appear)
 
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("ZUL_Client")
 
 local function runClientTests()

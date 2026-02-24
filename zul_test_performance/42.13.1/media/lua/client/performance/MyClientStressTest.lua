@@ -1,7 +1,7 @@
 -- MyClientStressTest.lua
 -- Goal: Verify that ZUL does not introduce noticeable FPS drops, log stalls, or GC pressure when logging is extremely noisy.
 
-local hasZUL, ZUL = pcall(require, "ZUL")
+local hasZUL, ZUL = pcall(require, "zul")
 ---@diagnostic disable-next-line: impossible-if, unnecessary-if
 if not hasZUL or type(ZUL) ~= "table" or not ZUL.new or not ZUL.Level then
     print("ZUL not found or invalid! Skipping stress test.")

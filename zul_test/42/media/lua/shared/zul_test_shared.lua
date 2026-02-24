@@ -4,7 +4,7 @@
 -- Scenario: Excluded from Global Log Level
 -- Expected: Only INFO and above should appear, even if Global is DEBUG/TRACE
 
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("ZUL_Shared")
 
 local function runSharedTests()
