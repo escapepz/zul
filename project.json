@@ -4,7 +4,7 @@
     "authors": ["eScape"],
     "workshop": {
         "id": 3653948326,
-        "visibility": "unlisted",
+        "visibility": "public",
         "tags": ["Build 42", "Framework", "Misc", "QoL"],
         "excludes": ["zul_test", "zul_test_guardrails", "zul_test_performance"]
     },

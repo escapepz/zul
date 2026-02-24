@@ -1,6 +1,6 @@
 # ZUL - Zomboid Unified Logging
 
-**Version: 1.1.0**
+**Version: 1.2.0**
 
 A unified logging framework for Project Zomboid mods with multi-level logging support, child loggers, and configurable sandbox options.
 
@@ -317,6 +317,11 @@ Mods that log _during_ the early boot sequence (before Stage 2) may use the fram
 Created by eScape (@escapepz)
 
 ## Changelog
+
+### Version 1.2.0 Breaking Changes
+
+- Update folder structure to match new game version (42.14).
+- Rename files to lowercase for cross-platform compatibility. Now use require("zul") instead, **NOT** "ZUL"
 
 ### Version 1.1.0
 
