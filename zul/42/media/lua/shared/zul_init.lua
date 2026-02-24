@@ -1,10 +1,10 @@
 -- @author eScape <https://github.com/escapepz/ZUL>
 
--- media/lua/shared/ZUL_Init.lua
+-- media/lua/shared/zul_init.lua
 -- Initialization script for ZUL framework
 -- Loads sandbox options on game start
 
-local ZUL = require "ZUL"
+local ZUL = require "zul"
 
 local function initializeZUL(force)
 	local sandbox = ZUL.sandboxOptions
