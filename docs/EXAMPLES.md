@@ -6,7 +6,7 @@ This document provides practical examples for mod developers using ZUL.
 
 ```lua
 -- MySimpleMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MySimpleMod")
 
 local function onPlayerSpawn(player)
@@ -31,7 +31,7 @@ Events.OnPlayerDeath.Add(onPlayerDeath)
 
 ```lua
 -- MyDebugMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyDebugMod")
 
 -- Enable debug mode during development
@@ -60,7 +60,7 @@ end
 
 ```lua
 -- Core.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyComplexMod")
 
 local Core = {}
@@ -74,7 +74,7 @@ return Core
 
 ```lua
 -- Database.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyComplexMod")
 
 local Database = {}
@@ -95,7 +95,7 @@ return Database
 -- Main.lua
 local Core = require "Core"
 local Database = require "Database"
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 
 -- Set global log level for the mod
 ZUL.setLevel("MyComplexMod", "INFO")
@@ -108,7 +108,7 @@ Database.query("players", { active = true })
 
 ```lua
 -- MyRobustMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyRobustMod")
 
 local function safeLoadConfig()
@@ -153,7 +153,7 @@ end
 
 ```lua
 -- MyPerformanceMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyPerformanceMod")
 
 local function measurePerformance(name, fn)
@@ -192,7 +192,7 @@ measurePerformance("expensiveCalculation", expensiveCalculation)
 
 ```lua
 -- MyConfigurableMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyConfigurableMod")
 
 local function init()
@@ -219,7 +219,7 @@ Events.OnGameBoot.Add(init)
 
 ```lua
 -- MyEventMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyEventMod")
 
 local function onVehicleEnter(player, vehicle)
@@ -252,7 +252,7 @@ Use `.log()` when you want immediate output in the game console/terminal without
 
 ```lua
 -- MyDebugScript.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("DebugHelper")
 
 local function onTick()
@@ -272,7 +272,7 @@ If you want your mod to work with or without ZUL, you can use a defensive wrappe
 
 ```lua
 -- MyDefensiveMod.lua
-local hasZUL, ZUL = pcall(require, "ZUL")
+local hasZUL, ZUL = pcall(require, "zul")
 local logger = nil
 
 if hasZUL and type(ZUL) == "table" and type(ZUL.new) == "function" then
@@ -301,44 +301,44 @@ return safeLog
 ## Best Practices
 
 1. **Use Appropriate Log Levels**
-   - TRACE: Very detailed debugging (e.g., loop iterations)
-   - DEBUG: Debugging information (e.g., function calls, data processing)
-   - INFO: Important events (e.g., initialization, player actions)
-   - WARN: Warning conditions (e.g., deprecated usage, slow operations)
-   - ERROR: Error conditions (e.g., failed operations, invalid data)
-   - FATAL: Critical failures (e.g., mod cannot continue)
+    - TRACE: Very detailed debugging (e.g., loop iterations)
+    - DEBUG: Debugging information (e.g., function calls, data processing)
+    - INFO: Important events (e.g., initialization, player actions)
+    - WARN: Warning conditions (e.g., deprecated usage, slow operations)
+    - ERROR: Error conditions (e.g., failed operations, invalid data)
+    - FATAL: Critical failures (e.g., mod cannot continue)
 
 2. **Create One Logger Per Mod**
 
-   ```lua
-   -- Good
-   local logger = ZUL.new("MyMod")
+    ```lua
+    -- Good
+    local logger = ZUL.new("MyMod")
 
-   -- Avoid creating multiple loggers for the same mod
-   ```
+    -- Avoid creating multiple loggers for the same mod
+    ```
 
 3. **Use Structured Context**
 
-   ```lua
-   -- Good
-   logger:info("Player action", { action = "craft", item = "axe" })
+    ```lua
+    -- Good
+    logger:info("Player action", { action = "craft", item = "axe" })
 
-   -- Less useful
-   logger:info("Player crafted axe")
-   ```
+    -- Less useful
+    logger:info("Player crafted axe")
+    ```
 
 4. **Check Log Level for Expensive Operations**
 
-   ```lua
-   if ZUL.isLoggingEnabled("MyMod", ZUL.Level.DEBUG) then
-       local expensiveData = collectAllDebugInfo()
-       logger:debug("Debug info", expensiveData)
-   end
-   ```
+    ```lua
+    if ZUL.isLoggingEnabled("MyMod", ZUL.Level.DEBUG) then
+        local expensiveData = collectAllDebugInfo()
+        logger:debug("Debug info", expensiveData)
+    end
+    ```
 
 5. **Don't Log Sensitive Information**
-   ```lua
-   -- Avoid logging passwords, tokens, or personal data
-   logger:debug("User login", { username = user.name }) -- OK
-   logger:debug("User login", { password = user.password }) -- BAD!
-   ```
+    ```lua
+    -- Avoid logging passwords, tokens, or personal data
+    logger:debug("User login", { username = user.name }) -- OK
+    logger:debug("User login", { password = user.password }) -- BAD!
+    ```

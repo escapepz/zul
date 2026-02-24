@@ -1,5 +1,5 @@
 -- Core.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyComplexMod")
 
 local Core = {}

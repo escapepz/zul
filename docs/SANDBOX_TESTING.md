@@ -25,7 +25,7 @@ _Verifies that ONLY listed mods are affected by the global log level._
 Run the following Lua code (e.g., via a test file or console):
 
 ```lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local target = ZUL.new("TargetMod")
 local other = ZUL.new("OtherMod")
 
@@ -54,7 +54,7 @@ _Verifies that specific mods can opt-out of the global settings._
 ### Execution
 
 ```lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local normal = ZUL.new("NormalMod")
 local noisy = ZUL.new("NoisyMod")
 
@@ -83,7 +83,7 @@ _Verifies that Exclude takes priority over Include._
 ### Execution
 
 ```lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local log = ZUL.new("ConflictedMod")
 
 print("--- Testing Precedence ---")
@@ -108,7 +108,7 @@ _Verifies that the ZUL framework itself is never affected by sandbox filters._
 ### Execution
 
 ```lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("ZUL")
 logger:info("ZUL Info message")
 ```

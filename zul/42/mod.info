@@ -1,5 +1,11 @@
-name=ZUL - Zomboid Unified Logging
+author=escapepz
+
 id=zul
+name=ZUL - Zomboid Unified Logging
 description=A unified logging framework for Project Zomboid mods with multi-level logging support (TRACE, DEBUG, INFO, WARN, ERROR, FATAL), child loggers, and configurable sandbox options.
+
 poster=poster.png
 icon=icon.png
+
+modversion=1.2.0
+versionMin=42.13.1

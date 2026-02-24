@@ -1,6 +1,6 @@
 -- @author eScape <https://github.com/escapepz/ZUL>
 
--- media/lua/shared/ZUL.lua (Zomboid Unified Logging)
+-- media/lua/shared/zul.lua (Zomboid Unified Logging)
 -- A unified logging framework for Project Zomboid mods
 -- Features: Multi-level logging, child loggers, sandbox options integration
 -- Inspired by pino/winston for Lua/Project Zomboid

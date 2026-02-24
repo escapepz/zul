@@ -1,5 +1,5 @@
 -- MyDebugScript.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("DebugHelper")
 
 local function onTick()

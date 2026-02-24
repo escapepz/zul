@@ -1,5 +1,5 @@
 -- MyDebugMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyDebugMod")
 
 -- Enable debug mode during development

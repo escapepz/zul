@@ -1,5 +1,5 @@
 -- MyEventMod.lua
-local ZUL = require "ZUL"
+local ZUL = require("zul")
 local logger = ZUL.new("MyEventMod")
 
 local function onVehicleEnter(player, vehicle)
