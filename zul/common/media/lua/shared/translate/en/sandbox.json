@@ -1,0 +1,18 @@
+{
+    "Sandbox_ZUL": "ZUL - Zomboid Unified Logging",
+
+    "Sandbox_ZUL_GlobalLogLevel": "Global Log Level",
+    "Sandbox_ZUL_GlobalLogLevel_tooltip": "Default log level for all mods using ZUL. Lower levels show more detailed logs. This setting applies to mods in the Include list (or all mods if Include list is empty), except those in the Exclude list.",
+    "Sandbox_ZUL_GlobalLogLevel_option1": "TRACE (Most Verbose)",
+    "Sandbox_ZUL_GlobalLogLevel_option2": "DEBUG",
+    "Sandbox_ZUL_GlobalLogLevel_option3": "INFO (Default)",
+    "Sandbox_ZUL_GlobalLogLevel_option4": "WARN",
+    "Sandbox_ZUL_GlobalLogLevel_option5": "ERROR",
+    "Sandbox_ZUL_GlobalLogLevel_option6": "FATAL (Least Verbose)",
+
+    "Sandbox_ZUL_IncludeMods": "Include Mods",
+    "Sandbox_ZUL_IncludeMods_tooltip": "Comma-separated list of mod names to apply ZUL settings to. Leave empty to apply to all mods (except those in Exclude list). Example: MyMod,AnotherMod",
+
+    "Sandbox_ZUL_ExcludeMods": "Exclude Mods",
+    "Sandbox_ZUL_ExcludeMods_tooltip": "Comma-separated list of mod names to exclude from ZUL settings. These mods will use their own log level settings. Example: NoisyMod,DebugMod"
+}
