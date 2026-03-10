@@ -5,14 +5,14 @@ local logger = ZUL.new("MySimpleMod")
 local function onPlayerSpawn(player)
     logger:info("Player spawned", {
         username = player:getUsername(),
-        profession = player:getDescriptor():getProfession()
+        profession = player:getDescriptor():getProfession(),
     })
 end
 
 local function onPlayerDeath(player)
     logger:warn("Player died", {
         username = player:getUsername(),
-        zombieKills = player:getZombieKills()
+        zombieKills = player:getZombieKills(),
     })
 end
 

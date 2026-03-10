@@ -22,7 +22,7 @@ local function safeLoadConfig()
 
     if not success then
         logger:error("Failed to load config", {
-            error = tostring(config)
+            error = tostring(config),
         })
         return nil
     end
@@ -40,7 +40,7 @@ local function criticalOperation()
     if not result then
         logger:fatal("Critical operation failed", {
             error = err,
-            timestamp = os.time()
+            timestamp = os.time(),
         })
         -- Handle critical failure
         return false

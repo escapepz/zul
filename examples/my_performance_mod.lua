@@ -14,12 +14,12 @@ local function measurePerformance(name, fn)
     if elapsed > 0.1 then
         logger:warn("Slow operation detected", {
             operation = name,
-            duration = elapsed
+            duration = elapsed,
         })
     else
         logger:debug("Performance", "Complete", {
             operation = name,
-            duration = elapsed
+            duration = elapsed,
         })
     end
 

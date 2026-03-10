@@ -8,6 +8,7 @@
 
 Logs/
 tmp/
+node_modules/
 
 luac.out
 

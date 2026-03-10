@@ -9,8 +9,8 @@ local function onVehicleEnter(player, vehicle)
         vehicleId = vehicle:getId(),
         location = {
             x = vehicle:getX(),
-            y = vehicle:getY()
-        }
+            y = vehicle:getY(),
+        },
     })
 end
 
@@ -18,7 +18,7 @@ local function onVehicleExit(player, vehicle)
     logger:info("Vehicle", "Exit", {
         player = player:getUsername(),
         vehicleType = vehicle:getScriptName(),
-        vehicleId = vehicle:getId()
+        vehicleId = vehicle:getId(),
     })
 end
 

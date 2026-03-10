@@ -21,7 +21,9 @@ local function GetIRLTimestamp()
 end
 
 local function benchTick()
-    if not logger then return end
+    if not logger then
+        return
+    end
     if not startTime then
         startTime = GetIRLTimestamp()
         print("ZUL Benchmark: Started")
@@ -30,7 +32,7 @@ local function benchTick()
     for i = 1, 100 do
         logger:debug("Bench", {
             index = i,
-            value = myRandom:random()
+            value = myRandom:random(),
         })
         lines = lines + 1
     end
@@ -39,13 +41,15 @@ local function benchTick()
         local endTime = GetIRLTimestamp()
         local seconds = (endTime - startTime) * 1.0
         -- Fallback to a small value if the benchmark finished in less than 1 second (os.time resolution)
-        if seconds <= 0 then seconds = 0.001 end
+        if seconds <= 0 then
+            seconds = 0.001
+        end
         local lps = lines / seconds
 
         logger:info("BenchmarkResult", {
             lines = lines,
             seconds = seconds,
-            linesPerSecond = lps
+            linesPerSecond = lps,
         })
 
         -- Note: print() is used intentionally here to provide immediate feedback in the console.
@@ -67,7 +71,9 @@ end
 
 ZUL_StartBenchmark = function()
     ---@diagnostic disable-next-line: impossible-if, unnecessary-if
-    if not hasZUL then return end
+    if not hasZUL then
+        return
+    end
     logger = ZUL.new("ZUL_Bench")
     logger:setLevel(ZUL.Level.DEBUG)
     lines = 0
@@ -78,6 +84,8 @@ ZUL_StartBenchmark = function()
         Events.OnTick.Add(benchTick)
     else
         print("ZUL Benchmark: Events.OnTick not available (running sync loop)")
-        for i = 1, 50 do benchTick() end
+        for i = 1, 50 do
+            benchTick()
+        end
     end
 end

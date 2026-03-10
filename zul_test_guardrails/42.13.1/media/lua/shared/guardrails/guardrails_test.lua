@@ -19,7 +19,8 @@ local function runTests()
     -- Test 1: Deny Keys
     logger:info("Test 1: Deny Keys")
     -- We use a raw table here; ZUL.serialize should now be the hooked version
-    local sensitive = { public = "hello integration", modData = { secret = 123 }, knownRecipes = { "test" } }
+    local sensitive =
+        { public = "hello integration", modData = { secret = 123 }, knownRecipes = { "test" } }
     local serialized = ZUL.serialize(sensitive)
 
     logger:info("Input: public, modData, knownRecipes")
@@ -34,7 +35,9 @@ local function runTests()
     -- Test 2: Truncation
     logger:info("Test 2: Truncation (Max 20 keys)")
     local bigTable = {}
-    for i = 1, 30 do bigTable["field" .. i] = i end
+    for i = 1, 30 do
+        bigTable["field" .. i] = i
+    end
     local serializedBig = ZUL.serialize(bigTable)
 
     logger:info("Input: 30 keys")
@@ -50,7 +53,11 @@ local function runTests()
     local serializedSmall = ZUL.serialize(small)
     logger:info("Serialized Result", { result = serializedSmall })
 
-    if string.find(serializedSmall, "x=10") and string.find(serializedSmall, "y=20") and not string.find(serializedSmall, "_truncated") then
+    if
+        string.find(serializedSmall, "x=10")
+        and string.find(serializedSmall, "y=20")
+        and not string.find(serializedSmall, "_truncated")
+    then
         logger:info("PASSED: Small table preserved.")
     else
         logger:error("FAILED: Small table corrupted.")

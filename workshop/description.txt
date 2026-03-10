@@ -2,6 +2,10 @@
 
 A unified logging framework for Project Zomboid mods with multi-level logging support, child loggers, and configurable sandbox options.
 
+[h3]⚠️ Important Note[/h3]
+This mod is not designed to be installed alone. It serves as a utility for other mods.
+ [url=https://steamcommunity.com/workshop/filedetails/discussion/3653948326/760682600544356887/]Which mods use ZUL? (Add yours here!)[/url]
+
 [h2]Features[/h2]
 [list]
 [*] [b]Multi-Level Logging[/b]: TRACE, DEBUG, INFO, WARN, ERROR, FATAL
@@ -30,7 +34,7 @@ logger:error("Failed to load config", errorDetails)
 [/list]
 
 [h2]Detailed Documentation[/h2]
-[url=https://github.com/escapepz/ZUL/blob/main/README.md]GitHub[/url]
+https://github.com/escapepz/ZUL/blob/main/README.md
 
 [hr][/hr]
 [h2]Ask for permission[/h2]

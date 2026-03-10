@@ -20,7 +20,9 @@ local function GetIRLTimestamp()
 end
 
 local function stressTick()
-    if not isStressing or not logger then return end
+    if not isStressing or not logger then
+        return
+    end
 
     counter = counter + 1
 
@@ -39,21 +41,27 @@ local function stressTick()
             tick = counter,
             index = i,
             fps = lastFPSValue,
-            timestamp = realTime
+            timestamp = realTime,
         })
     end
 end
 
 local function renderTick()
-    if not isStressing then return end
+    if not isStressing then
+        return
+    end
     -- Assign current FPS to a local var instead of printing to minimize IO interference
     lastFPSValue = math.floor(getAverageFPS())
 end
 
 ZUL_StartStress = function()
     ---@diagnostic disable-next-line: impossible-if, unnecessary-if
-    if not hasZUL then return end
-    if isStressing then return end
+    if not hasZUL then
+        return
+    end
+    if isStressing then
+        return
+    end
 
     logger = ZUL.new("ZUL_Stress")
     logger:setLevel(ZUL.Level.TRACE)
@@ -65,7 +73,11 @@ ZUL_StartStress = function()
     if Events and type(Events) == "table" and Events.OnTick then
         Events.OnTick.Add(stressTick)
         Events.OnRenderTick.Add(renderTick)
-        print("ZUL Stress Test: Started (200 TRACE logs per tick, Auto-stop at " .. STRESS_LIMIT .. ")")
+        print(
+            "ZUL Stress Test: Started (200 TRACE logs per tick, Auto-stop at "
+                .. STRESS_LIMIT
+                .. ")"
+        )
     else
         print("ZUL Stress Test: Events not available")
     end
@@ -73,7 +85,9 @@ end
 
 -- Provide a way to stop it easily from console or menu
 ZUL_StopStress = function()
-    if not isStressing then return end
+    if not isStressing then
+        return
+    end
     isStressing = false
 
     ---@diagnostic disable-next-line: impossible-if, unnecessary-if

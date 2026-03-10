@@ -7,7 +7,7 @@ local Database = {}
 function Database.query(table, filter)
     logger:debug("Database", "Query", {
         table = table,
-        filter = filter
+        filter = filter,
     })
 
     -- ... query logic ...

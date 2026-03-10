@@ -17,7 +17,9 @@ local DENY_KEYS = {
 --- @param maxKeys number? Default 20
 --- @return table
 local function safeContext(ctx, maxKeys)
-    if type(ctx) ~= "table" then return ctx end
+    if type(ctx) ~= "table" then
+        return ctx
+    end
     maxKeys = maxKeys or 20
 
     local out = {}
@@ -47,7 +49,9 @@ local function applyHooks()
         return
     end
 
-    if ZUL._guardrailsApplied then return end
+    if ZUL._guardrailsApplied then
+        return
+    end
 
     local originalSerialize = ZUL.serialize
 
@@ -72,13 +76,17 @@ local function applyHooks()
         else
             logger:debug(action, {
                 _heavy_data = "suppressed",
-                _hint = "Enable TRACE to see full payload"
+                _hint = "Enable TRACE to see full payload",
             })
         end
     end
 
     ZUL._guardrailsApplied = true
-    print("[" .. MODULE_NAME .. "] ZUL Guardrails: Applied (ZUL.serialize hooked, safeContext and sanitize enabled)")
+    print(
+        "["
+            .. MODULE_NAME
+            .. "] ZUL Guardrails: Applied (ZUL.serialize hooked, safeContext and sanitize enabled)"
+    )
 end
 
 -- 4. Execution Logic (Delay for Project Zomboid, immediate for tests)
